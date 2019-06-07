@@ -74,7 +74,7 @@ global $hub;
 
 
 if($_SESSION['level'] == '10') {
-	$query= "select * from user ";
+	$query= "select * from user where level != '10' ";
 }else { 
 $prodinya = $_SESSION['idprodi'];
 $query= "select * from user where level = '00' and idprodi = ".$_SESSION['idprodi']; ;}
@@ -126,9 +126,9 @@ $row = array(
 "akreditasi" => "-");
 ?>
 <h2>Input Data user</h2>
-<form action="curd_user.php?a=list" method="post">
+<form name = "inputan" action="curd_user.php?a=list" method="post" onsubmit="return validasi_input(this)">
 <input type="hidden" name="sql" value="create">
-username
+email&#160; &#160;&#160;&#160;&#160; 
 <input type="text" name="username" maxlength="70" size="70" value="<?php echo trim($row["username"]) ?>" /><br>
 password
 <input type="text" name="password" maxlength="70" size="70" value="<?php
@@ -175,7 +175,7 @@ $row = mysqli_fetch_array($result);
 <input type="hidden" name="sql" value="update">
 <input type="hidden" name="iduser" value="<?php echo trim($iduser) ?>">
 username
-<input type="text" name="username" maxlength="70" size="70" value="<?php echo trim($row["username"]) ?>" /><br>
+<input type="text" disabled="disabled"  name="username" maxlength="70" size="70" value="<?php echo trim($row["username"]) ?>" /><br>
 password
 <input type="text" name="password" maxlength="70" size="70" value="<?php
 echo trim($row["password"]) ?>" /><br>
@@ -186,19 +186,13 @@ Jenis User
 if($row["jenisuser"]=='1') {echo "checked=\"checked\""; } else {echo ""; } ?> > 1
 <br>
 Jenis User
-<input type="radio" name="level" value="-" <?php if($row["level"]=='-'
-|| $row["level"]=='') { echo "checked=\"checked\""; } else {echo ""; } ?>> -
 <input type="radio" name="level" value="00" <?php
 if($row["level"]=='00') {echo "checked=\"checked\""; } else {echo ""; } ?> > 00
 <input type="radio" name="level" value="11" <?php
-if($row["level"]=='11') {echo "checked=\"checked\""; } else {echo ""; } ?> > 01
+if($row["level"]=='11') {echo "checked=\"checked\""; } else {echo ""; } ?> > 11
 <br>
-status
 <input type="hidden" name="status" value="F">
-<br>
 idprodi
-<input type="radio" name="idprodi" value="-" <?php if($row["idprodi"]=='-'
-|| $row["idprodi"]=='') { echo "checked=\"checked\""; } else {echo ""; } ?>> -
 <input type="radio" name="idprodi" value="1" <?php
 if($row["idprodi"]=='1') {echo "checked=\"checked\""; } else {echo ""; } ?> > 1
 <input type="radio" name="idprodi" value="2" <?php
@@ -277,3 +271,42 @@ $query = "DELETE FROM `user` WHERE iduser = ".$_POST["iduser"];
 }
 ?>
 
+
+<script type="text/javascript">
+function validasi_input(form){
+
+
+var x=document.forms["inputan"]["username"].value;
+var atpos=x.indexOf("@");
+var dotpos=x.lastIndexOf(".");
+if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+  {
+  alert("email harus valid");
+  return false;
+  }
+
+  if (form.username.value == ""){
+    alert("Username masih kosong!");
+    form.username.focus();
+    return (false);
+  }
+
+  if (form.password.value == ""){
+    alert("password masih kosong!");
+    form.password.focus();
+    return (false);
+  }
+
+ var x=forms.username.value;
+ var atpos=x.indexOf("@");
+ var dotpos=x.lastIndexOf(".");
+ if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
+ {
+ alert("Isi Email dengan Benar");
+ }
+
+
+
+return (true);
+}
+</script>

@@ -9,9 +9,11 @@ if (time()-$_SESSION['timestamp']>$idletime){
 }
 //on session creation
 $_SESSION['timestamp']=time();
-
+$_SESSION['unamedb'] = $_POST['usr'];
+$_SESSION['pswdb'] = $_POST['psw'];
 require("../sistem/koneksi.php");
 $hub=open_connection();
+$hub2=open_connectionguest();
 $usr = $_POST['usr'];
 $psw = $_POST['psw'];
 $op = $_GET['op'];
@@ -46,13 +48,11 @@ href=\"javascript:history.back()\">kembali</a>");
 
 mysqli_close($hub);
 }else if($op=="out"){
-	$cekk = mysqli_query($hub, "UPDATE `user` SET `status` = 'F' WHERE `user`.`iduser` = $id ; ");
 
- unset($_SESSION['username']);
- unset($_SESSION['jenisuser']);
-  unset($_SESSION['level']);
-   unset($_SESSION['iduser']);
-    unset($_SESSION['idprodi']);
+
+	$cekk = mysqli_query($hub2, "UPDATE `user` SET `status` = 'F' WHERE `user`.`iduser` = $id ; ");
+session_unset(); 
+session_destroy();
  header("location:index.php");
 }
 
