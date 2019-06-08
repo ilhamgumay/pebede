@@ -15,7 +15,6 @@ switch ($a) {
  login();
  break;}
 ?>
-
 <?php
 function login()
 {
@@ -77,36 +76,26 @@ function login()
 							Login
 						</button>
 					</div>
-
 				</form>
 			</div>
 		</div>
 	</div>
-	
-
-
 </body>
 </html>
 <?php
 }
 ?>
-
-
 <?php
 function forgotpass()
 {
 ?>
-
 <form action="login.php?a=prosses" method="post">
 <h3> masukan email anda</h3>
 <div>email : <input type="text" name="Username" /></div>
 <div><input type="submit" value="kirim" /></div>
 </form>
-
-
 <?php
 }
-
 function prosses()
 { 
 require("../sistem/koneksi.php");
@@ -115,7 +104,6 @@ $query= "select * from user where Username = '".$_POST['Username']."'";
 $result = mysqli_query($hub,$query);
 if($row = mysqli_fetch_array($result))
 {
-
 $headers='';
 $to = $row['username'];
 $subject = 'lupa pass';
@@ -125,21 +113,13 @@ $headers .= 'From:<apanamanya006@gmail.com>' . "rn"; //bagian ini diganti sesuai
 @mail($to, $subject, $messages, $headers.php);
 if(@mail) 
 {
-    echo "pengiriman berhasil";
+    echo "pengiriman password berhasil, silakan cek email anda "; 
 }
 else 
 {
     echo "pengiriman gagal";
 }
-
-
 }
-else {echo " data anda ga ada";}
+else {echo "email yang anda masukan tidak tersedia di database  ada";}
 } 
 ?>
-
-
-
-
-
-

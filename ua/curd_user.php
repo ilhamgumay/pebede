@@ -284,29 +284,16 @@ if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
   alert("email harus valid");
   return false;
   }
-
   if (form.username.value == ""){
     alert("Username masih kosong!");
     form.username.focus();
     return (false);
   }
-
   if (form.password.value == ""){
     alert("password masih kosong!");
     form.password.focus();
     return (false);
   }
-
- var x=forms.username.value;
- var atpos=x.indexOf("@");
- var dotpos=x.lastIndexOf(".");
- if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length)
- {
- alert("Isi Email dengan Benar");
- }
-
-
-
 return (true);
 }
 </script>

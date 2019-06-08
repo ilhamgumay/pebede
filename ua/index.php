@@ -1,6 +1,10 @@
 <?php
 session_start();
 $idletime=60;//udah 60 detik dia logout gaees
+
+require("../sistem/koneksi.php");
+$hub=open_connection();
+
 if (time()-$_SESSION['timestamp']>$idletime){
     header('Location:sistem.php?op=out');
 }else{
@@ -79,8 +83,46 @@ else {
 <?php
 function read_user()
 {
+global $hub;
+
+
+if($_SESSION['level'] == '10') {
+	$query= "select * from user where level != '10' ";
+}else { 
+$prodinya = $_SESSION['idprodi'];
+$query= "select * from user where level = '00' and idprodi = ".$_SESSION['idprodi']; ;}
+
+
+$result = mysqli_query($hub,$query);
  ?>
-<h1> anda login sebagai user biasa</h1> 
+<h2>account information </h2>
+<table border=1 cellpadding=2>
+<tr><td colspan="5">
+</td><td colspan="5">
+</td></tr>
+<tr><td>ID</td><td>USERNAME</td><td>JENIS USER</td><td>LEVEL</td><td>STATUS</td><td>ID PRODI </td></tr>
+<?php
+while($row = mysqli_fetch_array($result))
+{
+?>
+<tr>
+<td><?php echo $row['iduser']; ?></td>
+<td><?php echo $row['username']; ?></td>
+<td><?php echo $row['jenisuser']; ?></td>
+<td><?php echo $row['level']; ?></td>
+<td><?php echo $row['status']; ?></td>
+<td><?php echo $row['idprodi']; ?></td>
+<td>
+<a href="#">EDIT</a>
+</td>
+</tr>
+<?php
+}
+?>
+</table>
+
+
+
 
 <?php
 }
